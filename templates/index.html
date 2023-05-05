@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container my-2">
+
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModal">
+    Add Todo
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Todo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          
+            <form action="/" method="POST">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Todo Title</label>
+                    <input type="Text" class="form-control" name="title" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Todo Title">
+                    
+                </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Todo Description</label>
+                        <input type="text" class="form-control" name="desc" id="exampleInputPassword1" placeholder="Enter Todo Description">
+                    </div>                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn bg-dark text-white btn-sm">Submit</button>
+                </div>
+            </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+    
+    
+    <div class="container my-3">
+        <h1 align="center">Yours Todos</h1>
+        {% if data|length==0 %}
+        <div class=" alert alert-dark text-dark" role="alert">
+            No Todos Found. Add your first todo now
+        </div>
+        {% else %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">S.N</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in data %}
+                <tr>
+                    <th scope="row">{{loop.index}}</th>
+                    <td>{{i.title}}</td>
+                    <td>{{i.desc}}</td>
+                    <td>{{i.date_created}}</td>
+                    <td>
+                        <a href="/update/{{i.sno}}" type="button" class="btn btn-outline-warning text-dark mx-2  btn-sm">Update</a>
+                        <a href="/delete/{{i.sno}}" type="button" class="btn btn-outline-danger mx-2  btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+    
+    {% endblock content %}
